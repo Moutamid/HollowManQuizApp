@@ -48,6 +48,7 @@ public class QuizScreen extends AppCompatActivity {
     private FirebaseUser user;
     private InterstitialAd interstitialAd;
     int mistakes = 0;
+    private boolean isClicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +110,8 @@ public class QuizScreen extends AppCompatActivity {
                     public void onClick(View v) {
                         final_score++;
                         binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
+                        isClicked = true;
+
                     }
                 });
                 binding.option2Layout.setOnClickListener(new View.OnClickListener() {
@@ -116,6 +119,7 @@ public class QuizScreen extends AppCompatActivity {
                     public void onClick(View v) {
                         binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
                         binding.option2Layout.setBackgroundResource(R.drawable.wrong_options_background);
+                        isClicked = true;
                     }
                 });
                 binding.option3Layout.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +127,7 @@ public class QuizScreen extends AppCompatActivity {
                     public void onClick(View v) {
                         binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
                         binding.option3Layout.setBackgroundResource(R.drawable.wrong_options_background);
+                        isClicked = true;
                     }
                 });
 
@@ -138,6 +143,7 @@ public class QuizScreen extends AppCompatActivity {
                     public void onClick(View v) {
                         final_score++;
                         binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
+                        isClicked = true;
                     }
                 });
                 binding.option2Layout.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +152,7 @@ public class QuizScreen extends AppCompatActivity {
                         binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
                         binding.option2Layout.setBackgroundResource(R.drawable.wrong_options_background);
                         mistakes++;
+                        isClicked = true;
                     }
                 });
                 binding.option3Layout.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +161,7 @@ public class QuizScreen extends AppCompatActivity {
                         binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
                         binding.option3Layout.setBackgroundResource(R.drawable.wrong_options_background);
                         mistakes++;
+                        isClicked = true;
                     }
                 });
             }
@@ -168,6 +176,7 @@ public class QuizScreen extends AppCompatActivity {
                     public void onClick(View v) {
                         final_score++;
                         binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
+                        isClicked = true;
                     }
                 });
                 binding.option2Layout.setOnClickListener(new View.OnClickListener() {
@@ -176,6 +185,7 @@ public class QuizScreen extends AppCompatActivity {
                         binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
                         binding.option2Layout.setBackgroundResource(R.drawable.wrong_options_background);
                         mistakes++;
+                        isClicked = true;
                     }
                 });
                 binding.option3Layout.setOnClickListener(new View.OnClickListener() {
@@ -184,6 +194,7 @@ public class QuizScreen extends AppCompatActivity {
                         binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
                         binding.option3Layout.setBackgroundResource(R.drawable.wrong_options_background);
                         mistakes++;
+                        isClicked = true;
                     }
                 });
             }else if (type.equals("cold")){
@@ -197,6 +208,7 @@ public class QuizScreen extends AppCompatActivity {
                     public void onClick(View v) {
                         final_score++;
                         binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
+                        isClicked = true;
                     }
                 });
                 binding.option2Layout.setOnClickListener(new View.OnClickListener() {
@@ -205,6 +217,7 @@ public class QuizScreen extends AppCompatActivity {
                         binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
                         binding.option2Layout.setBackgroundResource(R.drawable.wrong_options_background);
                         mistakes++;
+                        isClicked = true;
                     }
                 });
                 binding.option3Layout.setOnClickListener(new View.OnClickListener() {
@@ -213,6 +226,7 @@ public class QuizScreen extends AppCompatActivity {
                         binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
                         binding.option3Layout.setBackgroundResource(R.drawable.wrong_options_background);
                         mistakes++;
+                        isClicked = true;
                     }
                 });
             }else if (type.equals("gulf")){
@@ -226,6 +240,7 @@ public class QuizScreen extends AppCompatActivity {
                     public void onClick(View v) {
                         final_score++;
                         binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
+                        isClicked = true;
                     }
                 });
                 binding.option2Layout.setOnClickListener(new View.OnClickListener() {
@@ -234,6 +249,7 @@ public class QuizScreen extends AppCompatActivity {
                         binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
                         binding.option2Layout.setBackgroundResource(R.drawable.wrong_options_background);
                         mistakes++;
+                        isClicked = true;
                     }
                 });
                 binding.option3Layout.setOnClickListener(new View.OnClickListener() {
@@ -242,6 +258,7 @@ public class QuizScreen extends AppCompatActivity {
                         binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
                         binding.option3Layout.setBackgroundResource(R.drawable.wrong_options_background);
                         mistakes++;
+                        isClicked = true;
                     }
                 });
             }
@@ -249,63 +266,67 @@ public class QuizScreen extends AppCompatActivity {
         binding.next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                i = i+1;
+                if (isClicked) {
+                    i = i + 1;
+                    binding.option1Layout.setBackgroundResource(R.drawable.options_background);
+                    binding.option2Layout.setBackgroundResource(R.drawable.options_background);
+                    binding.option3Layout.setBackgroundResource(R.drawable.options_background);
+                    if (i < 10) {
+                        //   Toast.makeText(QuizScreen.this, ""+ i, Toast.LENGTH_SHORT).show();
+                        if (type.equals("french")) {
+                            binding.image.setImageDrawable(getDrawable(franceList.get(i).getImage()));
+                            binding.question.setText(franceList.get(i).getQuestiom());
+                            binding.option1.setText(franceList.get(i).getOption1());
+                            binding.option2.setText(franceList.get(i).getOption2());
+                            if (franceList.get(i).getOption3().equals("")) {
+                                binding.option3Layout.setVisibility(View.GONE);
+                            } else {
+                                binding.option3.setText(franceList.get(i).getOption3());
+                                binding.option3Layout.setVisibility(View.VISIBLE);
+                            }
+                            checkFranceAnswers();
 
-                binding.option1Layout.setBackgroundResource(R.drawable.options_background);
-                binding.option2Layout.setBackgroundResource(R.drawable.options_background);
-                binding.option3Layout.setBackgroundResource(R.drawable.options_background);
-                if(i < 10) {
-                 //   Toast.makeText(QuizScreen.this, ""+ i, Toast.LENGTH_SHORT).show();
-                    if (type.equals("french")) {
-                        binding.image.setImageDrawable(getDrawable(franceList.get(i).getImage()));
-                        binding.question.setText(franceList.get(i).getQuestiom());
-                        binding.option1.setText(franceList.get(i).getOption1());
-                        binding.option2.setText(franceList.get(i).getOption2());
-                        if (franceList.get(i).getOption3().equals("")){
-                            binding.option3Layout.setVisibility(View.GONE);
-                        }else {
-                            binding.option3.setText(franceList.get(i).getOption3());
-                            binding.option3Layout.setVisibility(View.VISIBLE);
+                        } else if (type.equals("first")) {
+                            binding.image.setImageDrawable(getDrawable(firstWarList.get(i).getImage()));
+                            binding.question.setText(firstWarList.get(i).getQuestiom());
+                            binding.option1.setText(firstWarList.get(i).getOption1());
+                            binding.option2.setText(firstWarList.get(i).getOption2());
+                            binding.option3.setText(firstWarList.get(i).getOption3());
+                            checkFirstWarAnswers();
+                        } else if (type.equals("second")) {
+                            binding.image.setImageDrawable(getDrawable(secondWarList.get(i).getImage()));
+                            binding.question.setText(secondWarList.get(i).getQuestiom());
+                            binding.option1.setText(secondWarList.get(i).getOption1());
+                            binding.option2.setText(secondWarList.get(i).getOption2());
+                            binding.option3.setText(secondWarList.get(i).getOption3());
+                            checkSecondWarAnswers();
+                        } else if (type.equals("cold")) {
+                            binding.image.setImageDrawable(getDrawable(coldWarList.get(i).getImage()));
+                            binding.question.setText(coldWarList.get(i).getQuestiom());
+                            binding.option1.setText(coldWarList.get(i).getOption1());
+                            binding.option2.setText(coldWarList.get(i).getOption2());
+                            binding.option3.setText(coldWarList.get(i).getOption3());
+                            checkColdWarAnswers();
+                        } else if (type.equals("gulf")) {
+                            binding.image.setImageDrawable(getDrawable(gulfWarList.get(i).getImage()));
+                            binding.question.setText(gulfWarList.get(i).getQuestiom());
+                            binding.option1.setText(gulfWarList.get(i).getOption1());
+                            binding.option2.setText(gulfWarList.get(i).getOption2());
+                            binding.option3.setText(gulfWarList.get(i).getOption3());
+                            checkGulfWarAnswers();
                         }
-                        checkFranceAnswers();
-
-                    } else if (type.equals("first")) {
-                        binding.image.setImageDrawable(getDrawable(firstWarList.get(i).getImage()));
-                        binding.question.setText(firstWarList.get(i).getQuestiom());
-                        binding.option1.setText(firstWarList.get(i).getOption1());
-                        binding.option2.setText(firstWarList.get(i).getOption2());
-                        binding.option3.setText(firstWarList.get(i).getOption3());
-                        checkFirstWarAnswers();
-                    } else if (type.equals("second")) {
-                        binding.image.setImageDrawable(getDrawable(secondWarList.get(i).getImage()));
-                        binding.question.setText(secondWarList.get(i).getQuestiom());
-                        binding.option1.setText(secondWarList.get(i).getOption1());
-                        binding.option2.setText(secondWarList.get(i).getOption2());
-                        binding.option3.setText(secondWarList.get(i).getOption3());
-                        checkSecondWarAnswers();
-                    } else if (type.equals("cold")) {
-                        binding.image.setImageDrawable(getDrawable(coldWarList.get(i).getImage()));
-                        binding.question.setText(coldWarList.get(i).getQuestiom());
-                        binding.option1.setText(coldWarList.get(i).getOption1());
-                        binding.option2.setText(coldWarList.get(i).getOption2());
-                        binding.option3.setText(coldWarList.get(i).getOption3());
-                        checkColdWarAnswers();
-                    } else if (type.equals("gulf")) {
-                        binding.image.setImageDrawable(getDrawable(gulfWarList.get(i).getImage()));
-                        binding.question.setText(gulfWarList.get(i).getQuestiom());
-                        binding.option1.setText(gulfWarList.get(i).getOption1());
-                        binding.option2.setText(gulfWarList.get(i).getOption2());
-                        binding.option3.setText(gulfWarList.get(i).getOption3());
-                        checkGulfWarAnswers();
                     }
-                }
-                if (i==9){
-                    binding.buttons.setVisibility(View.GONE);
-                    binding.submit.setVisibility(View.VISIBLE);
-                }
+                    if (i == 9) {
+                        binding.buttons.setVisibility(View.GONE);
+                        binding.submit.setVisibility(View.VISIBLE);
+                    }
 
-                if (mistakes >= 3) {
-                    showLoseDialig();
+                    if (mistakes >= 3) {
+                        showLoseDialig();
+                    }
+                    isClicked = false;
+                }else{
+                    Toast.makeText(QuizScreen.this, "please select any option!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -392,6 +413,7 @@ public class QuizScreen extends AppCompatActivity {
         binding.option1Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isClicked = true;
                 if (i==2){
                     binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
               //      Toast.makeText(QuizScreen.this, franceList.get(i).getQuestiom(), Toast.LENGTH_SHORT).show();
@@ -442,6 +464,7 @@ public class QuizScreen extends AppCompatActivity {
         binding.option2Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isClicked = true;
                 if (i==1){
                     binding.option2Layout.setBackgroundResource(R.drawable.correct_options_background);
                    // Toast.makeText(QuizScreen.this, franceList.get(i).getQuestiom(), Toast.LENGTH_SHORT).show();
@@ -491,6 +514,7 @@ public class QuizScreen extends AppCompatActivity {
         binding.option3Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isClicked = true;
                 if (i==4){
                     binding.option3Layout.setBackgroundResource(R.drawable.correct_options_background);
                     //   Toast.makeText(QuizScreen.this, franceList.get(i).getQuestiom(), Toast.LENGTH_SHORT).show();
@@ -544,6 +568,7 @@ public class QuizScreen extends AppCompatActivity {
         binding.option1Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isClicked = true;
                 if (i==3){
                     binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
                     //      Toast.makeText(QuizScreen.this, franceList.get(i).getQuestiom(), Toast.LENGTH_SHORT).show();
@@ -594,6 +619,7 @@ public class QuizScreen extends AppCompatActivity {
         binding.option2Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isClicked = true;
                 if (i==1){
                     binding.option2Layout.setBackgroundResource(R.drawable.correct_options_background);
                     // Toast.makeText(QuizScreen.this, franceList.get(i).getQuestiom(), Toast.LENGTH_SHORT).show();
@@ -644,6 +670,7 @@ public class QuizScreen extends AppCompatActivity {
         binding.option3Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isClicked = true;
                 if (i==2){
                     binding.option3Layout.setBackgroundResource(R.drawable.correct_options_background);
                     //   Toast.makeText(QuizScreen.this, franceList.get(i).getQuestiom(), Toast.LENGTH_SHORT).show();
@@ -697,6 +724,7 @@ public class QuizScreen extends AppCompatActivity {
         binding.option1Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isClicked = true;
                 if (i==2){
                     binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
                     //      Toast.makeText(QuizScreen.this, franceList.get(i).getQuestiom(), Toast.LENGTH_SHORT).show();
@@ -749,6 +777,7 @@ public class QuizScreen extends AppCompatActivity {
         binding.option2Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isClicked = true;
                 if (i==1){
                     binding.option2Layout.setBackgroundResource(R.drawable.correct_options_background);
                     // Toast.makeText(QuizScreen.this, franceList.get(i).getQuestiom(), Toast.LENGTH_SHORT).show();
@@ -800,6 +829,7 @@ public class QuizScreen extends AppCompatActivity {
         binding.option3Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isClicked = true;
                 if (i==3){
                     binding.option3Layout.setBackgroundResource(R.drawable.correct_options_background);
                     //   Toast.makeText(QuizScreen.this, franceList.get(i).getQuestiom(), Toast.LENGTH_SHORT).show();
@@ -852,6 +882,7 @@ public class QuizScreen extends AppCompatActivity {
         binding.option1Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isClicked = true;
                 if (i==6){
                     binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
                     //      Toast.makeText(QuizScreen.this, franceList.get(i).getQuestiom(), Toast.LENGTH_SHORT).show();
@@ -903,6 +934,7 @@ public class QuizScreen extends AppCompatActivity {
         binding.option2Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isClicked = true;
                 if (i==3){
                     binding.option2Layout.setBackgroundResource(R.drawable.correct_options_background);
                     // Toast.makeText(QuizScreen.this, franceList.get(i).getQuestiom(), Toast.LENGTH_SHORT).show();
@@ -955,6 +987,7 @@ public class QuizScreen extends AppCompatActivity {
         binding.option3Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isClicked = true;
                 if (i==1){
                     binding.option3Layout.setBackgroundResource(R.drawable.correct_options_background);
                     //   Toast.makeText(QuizScreen.this, franceList.get(i).getQuestiom(), Toast.LENGTH_SHORT).show();
@@ -1010,6 +1043,7 @@ public class QuizScreen extends AppCompatActivity {
         binding.option1Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isClicked = true;
                 if (i==1){
                     binding.option1Layout.setBackgroundResource(R.drawable.correct_options_background);
                     //      Toast.makeText(QuizScreen.this, franceList.get(i).getQuestiom(), Toast.LENGTH_SHORT).show();
@@ -1062,6 +1096,7 @@ public class QuizScreen extends AppCompatActivity {
         binding.option2Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isClicked = true;
                 if (i==6){
                     binding.option2Layout.setBackgroundResource(R.drawable.correct_options_background);
                     // Toast.makeText(QuizScreen.this, franceList.get(i).getQuestiom(), Toast.LENGTH_SHORT).show();
@@ -1112,6 +1147,7 @@ public class QuizScreen extends AppCompatActivity {
         binding.option3Layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                isClicked = true;
                 if (i==4){
                     binding.option3Layout.setBackgroundResource(R.drawable.correct_options_background);
                     //   Toast.makeText(QuizScreen.this, franceList.get(i).getQuestiom(), Toast.LENGTH_SHORT).show();

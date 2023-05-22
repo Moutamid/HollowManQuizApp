@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">QuizApp</string>
+    <string name="app_name">Hollowman</string>
     <string name="category1">French Revolution</string>
     <string name="qno1">What were the social orders of the Ancien Régime? C.O = correct one\nThe first answer is always the right one, you</string>
     <string name="q1op1">First, Second and Third States C.O</string>
